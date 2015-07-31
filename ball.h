@@ -1,5 +1,8 @@
 //header file for the ball class
+#ifndef BALL_H
+#define BALL_H
 #include <SFML/Graphics.hpp>
+#include "paddle.h"
 using namespace std;
 
 class ball{
@@ -18,11 +21,12 @@ class ball{
 
 		void changeTexture(sf::Texture* Txt);
 		void moveBall(sf::Clock* clk);
+		void reverseX();
 
 		bool checkLeft();
 		bool checkRight();
 		bool checkTop();
 		bool checkBot();
-
-
+		bool checkCollision(paddle pdl);
 };
+#endif

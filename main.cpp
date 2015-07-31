@@ -5,6 +5,7 @@
 #include "ball.h"
 #include "paddle.h"
 
+
 //THIS IS A BIG OL TEST
 
 using namespace std;
@@ -26,22 +27,20 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	sf::Texture paddleTexture;
-	if (!paddleTexture.loadFromFile("paddle.png")){
+	sf::Texture* paddleTexture = new sf::Texture();
+	if (!paddleTexture->loadFromFile("paddle.png")){
 		return EXIT_FAILURE;
 	}
-	sf::Texture* paddleTexturePtr = &paddleTexture;
 
 	sf::Sprite* ballPtr;
-	sf::Sprite gameBall;
-	gameBall.setScale(0.25f, 0.25f);
-	ballPtr = &gameBall;
-	gameBall.setTexture(ballTexture);
+	ballPtr = new sf::Sprite();
+	ballPtr->setScale(0.25f, 0.25f);
+
+	ballPtr->setTexture(ballTexture);
 	window.setPosition(sf::Vector2i(10, 50));
 	ball testBall(ballPtr);
-	paddle testPaddle(paddleTexturePtr, 3, 1);
-	paddle testPaddle2(paddleTexturePtr, 3, 2);
-	//testBall.changeTexture(&faceTexture);
+	paddle testPaddle(paddleTexture, 3, 1); //left
+	paddle testPaddle2(paddleTexture, 5, 2); 
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -69,8 +68,6 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
 			testPaddle2.movePaddle(&leftClock, false);
 		}
-		//float delta = clock.restart().asSeconds();
-		//testBall.getSprite()->move(speed * delta, 0.f);
 		testBall.moveBall(&clock);
 		
 		if (testBall.checkLeft() == true){
@@ -80,6 +77,18 @@ int main()
 			window.close();
 		}
 
+		if ((testBall.getSprite()->getPosition().x > gameWidth * .90)){
+			if (testBall.checkCollision(testPaddle2) == true){
+				window.setTitle("collided with right");
+				testBall.reverseX();
+			}
+		}
+		if (testBall.getSprite()->getPosition().x < gameWidth * .2){
+			if (testBall.checkCollision(testPaddle) == true){
+				window.setTitle("collided with left");
+				testBall.reverseX();
+			}
+		}
 		window.clear(sf::Color::White);
 		window.draw(*(testBall.getSprite()));
 		testPaddle.drawPaddle(&window);

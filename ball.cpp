@@ -1,4 +1,5 @@
 #include "ball.h"
+#include "paddle.h"
 #include <stdio.h>
 #include <iostream>
 
@@ -68,4 +69,17 @@ void ball::moveBall(sf::Clock* clk){
 	}
 	this->sprite->move(xVelocity * delta, yVelocity * delta);
 	//this->sprite->move(.02, 0.f);
+}
+bool ball::checkCollision(paddle Paddle){
+	for (auto itor = Paddle.getPVector()->begin(); itor != Paddle.getPVector()->end(); itor++){
+		if (this->getSprite()->getGlobalBounds().intersects(itor->getGlobalBounds())){
+			itor = Paddle.getPVector()->erase(itor);
+			return true;
+		}
+	}
+	return false;
+}
+
+void ball::reverseX(){
+	this->xVelocity *= (-1.f);
 }
