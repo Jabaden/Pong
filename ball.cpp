@@ -87,3 +87,19 @@ void ball::reverseX(){
 bool ball::getHitBy(){
 	return hitByLeft;
 }
+
+bool ball::checkPowerupCollision(sf::Sprite* pUp){
+	if (this->getSprite()->getGlobalBounds().intersects(pUp->getGlobalBounds())){
+		return true;
+	}
+	return false;
+}
+
+void ball::swapHitBy(){
+	if (this->hitByLeft == true){
+		this->hitByLeft = false;
+	}
+	else{
+		this->hitByLeft = true;
+	}
+}

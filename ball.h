@@ -23,7 +23,9 @@ class ball{
 		void changeTexture(sf::Texture* Txt);
 		void moveBall(sf::Clock* clk);
 		void reverseX();
-
+		void swapHitBy();
+		
+		bool checkPowerupCollision(sf::Sprite* pUp);
 		bool checkLeft();
 		bool checkRight();
 		bool checkTop();

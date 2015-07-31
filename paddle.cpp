@@ -4,6 +4,7 @@
 
 paddle::paddle(sf::Texture* txt, int size, int player){
 	pdl = new sVector();
+	count = 0;
 	for (int i = 0; i < size; i++){
 		sf::Sprite* temp;
 		temp = new sf::Sprite;

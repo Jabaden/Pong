@@ -19,7 +19,14 @@ int main()
 	sf::Clock leftClock;
 	sf::Clock rightCLock;
 	string testString = "omgwtfbbq";
-	sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight), "SFML IS WORKING");
+	sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight), "Pong_John_Baden");
+	//------------------------------------------Sounds--------------------------------------------
+	sf::SoundBuffer buffer;
+	if (!buffer.loadFromFile("applause2_x.wav"))
+		return -1;
+	sf::Sound applause;
+	applause.setBuffer(buffer);
+
 	
 	//------------------------------------------TEXTURES-------------------------------------------
 	sf::Texture ballTexture;
@@ -55,6 +62,14 @@ int main()
 	ball testBall(ballPtr);
 	paddle testPaddle(paddleTexture, 3, 1); //left
 	paddle testPaddle2(paddleTexture, 5, 2); 
+
+	sf::Sprite segment;
+	segment.setTexture(*paddleTexture, true);
+	//------------------------------------------------TESTING---------------------------
+	int lastHeight;
+	lastHeight = segment.getGlobalBounds().height;
+	
+	//-----------------------------------------------------------------------------------
 
 	powerup powerUp(puPtr);
 
@@ -98,16 +113,34 @@ int main()
 		if (testBall.checkRight() == true){
 			window.close();
 		}
+		//--------BALL AND POWERUP
+		if (testBall.checkPowerupCollision(puPtr) == true){
+			
+			//finding the last element in the vector and getting its position to insert the segement in the correct place
+			if (testBall.getHitBy() == false){ //came from the right
+				segment.setPosition(1180, (testPaddle2.getPVector()->back().getPosition().y) + lastHeight);
+				testPaddle2.getPVector()->push_back(segment);
+			} 
+			else{
+				segment.setPosition(0, (testPaddle.getPVector()->back().getPosition().y) + lastHeight);
+				testPaddle.getPVector()->push_back(segment);
+			}
+			powerUp.getSprite()->setPosition(200, 200);
+			
+		}
 
 		if ((testBall.getSprite()->getPosition().x > gameWidth * .90)){
 			if (testBall.checkCollision(testPaddle2) == true){
 				window.setTitle("collided with right");
+				testBall.swapHitBy();
+				applause.play();
 				testBall.reverseX();
 			}
 		}
 		if (testBall.getSprite()->getPosition().x < gameWidth * .2){
 			if (testBall.checkCollision(testPaddle) == true){
 				window.setTitle("collided with left");
+				
 				testBall.reverseX();
 			}
 		}
