@@ -13,6 +13,7 @@ class ball{
 		float xVelocity;
 		float yVelocity;
 		sf::FloatRect bBox;
+		bool hitByLeft = true;
 	public:
 		ball(sf::Sprite* spright);
 
@@ -28,5 +29,6 @@ class ball{
 		bool checkTop();
 		bool checkBot();
 		bool checkCollision(paddle pdl);
+		bool getHitBy();
 };
 #endif

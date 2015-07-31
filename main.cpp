@@ -2,8 +2,10 @@
 #include <iostream>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "ball.h"
 #include "paddle.h"
+#include "powerup.h"
 
 
 //THIS IS A BIG OL TEST
@@ -18,6 +20,8 @@ int main()
 	sf::Clock rightCLock;
 	string testString = "omgwtfbbq";
 	sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight), "SFML IS WORKING");
+	
+	//------------------------------------------TEXTURES-------------------------------------------
 	sf::Texture ballTexture;
 	if (!ballTexture.loadFromFile("ball.png")){
 		return EXIT_FAILURE;
@@ -32,15 +36,29 @@ int main()
 		return EXIT_FAILURE;
 	}
 
+	sf::Texture powerupTexture;
+	if (!powerupTexture.loadFromFile("heart.png")){
+		return EXIT_FAILURE;
+	}
+	//---------------------------------------TEXTURES END------------------------------------------
 	sf::Sprite* ballPtr;
+	sf::Sprite* puPtr;
+	puPtr = new sf::Sprite();
+	puPtr->setScale(0.25f, 0.25f);
+	puPtr->setTexture(powerupTexture);
+
 	ballPtr = new sf::Sprite();
 	ballPtr->setScale(0.25f, 0.25f);
-
 	ballPtr->setTexture(ballTexture);
+
 	window.setPosition(sf::Vector2i(10, 50));
 	ball testBall(ballPtr);
 	paddle testPaddle(paddleTexture, 3, 1); //left
 	paddle testPaddle2(paddleTexture, 5, 2); 
+
+	powerup powerUp(puPtr);
+
+
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -55,6 +73,7 @@ int main()
 			//}
 			
 		}
+		//----------------------------------KeyBoard Mapping--------------------------------
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
 			testPaddle.movePaddle(&leftClock, true);
 		}
@@ -68,8 +87,11 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
 			testPaddle2.movePaddle(&leftClock, false);
 		}
-		testBall.moveBall(&clock);
-		
+		//-----------------------------------KeyBoard Mapping End---------------------------
+
+		testBall.moveBall(&clock);//moving the ball around 
+
+		//---------------------------------Collision Testing---------------------------------
 		if (testBall.checkLeft() == true){
 			window.close();
 		}
@@ -89,11 +111,17 @@ int main()
 				testBall.reverseX();
 			}
 		}
+		//------------------------------Collision Testing End------------------------------
+
+		//------------------------------Rendering------------------------------------------
 		window.clear(sf::Color::White);
+
 		window.draw(*(testBall.getSprite()));
 		testPaddle.drawPaddle(&window);
 		testPaddle2.drawPaddle(&window);
+		window.draw(*(powerUp.getSprite()));
 		window.display();
+		//------------------------------Rendering End--------------------------------------
 	}
 
 	return 0;

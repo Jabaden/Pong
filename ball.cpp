@@ -83,3 +83,7 @@ bool ball::checkCollision(paddle Paddle){
 void ball::reverseX(){
 	this->xVelocity *= (-1.f);
 }
+
+bool ball::getHitBy(){
+	return hitByLeft;
+}
