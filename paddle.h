@@ -6,7 +6,7 @@ class paddle{
 private:
 	using sVector = vector<sf::Sprite>; //vector of sprites
 	int count;
-	double pSpeed = .01;
+	double pSpeed = .1;
 	sVector *pdl;
 public:
 	paddle(sf::Texture* txt, int size, int player); // 1 = player...1, 2 = player 2

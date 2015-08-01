@@ -2,13 +2,14 @@
 #include "paddle.h"
 #include <stdio.h>
 #include <iostream>
+#include <cmath>
 
 ball::ball(sf::Sprite* spright){
 	sprite = spright;
 	speed = 100.f;
 	sprite->setPosition(1200.f / 2.f, 600.f / 2.f);
-	xVelocity = 50.f;
-	yVelocity = -50.f;
+	xVelocity = 300.f;
+	yVelocity = -300.f;
 	bBox = sprite->getGlobalBounds();
 }
 
@@ -21,7 +22,7 @@ sf::FloatRect ball::getBB(){
 }
 
 void ball::changeTexture(sf::Texture* txt){
-	this->sprite->setTexture(*txt,true);
+	this->sprite->setTexture(*txt, true);
 }
 
 bool ball::checkLeft(){
@@ -62,24 +63,50 @@ void ball::moveBall(sf::Clock* clk){
 	//negative is left and up
 	float delta = clk->restart().asSeconds();
 	if (this->checkTop() == true){
-		yVelocity *= -1.f;
+		yVelocity = abs(yVelocity);
 	}
 	if (this->checkBot() == true){
-		yVelocity *= -1.f;
+		yVelocity = -(abs(yVelocity));
 	}
 	this->sprite->move(xVelocity * delta, yVelocity * delta);
 	//this->sprite->move(.02, 0.f);
 }
 bool ball::checkCollision(paddle Paddle){
+	auto tempItor = Paddle.getPVector()->begin();
 	for (auto itor = Paddle.getPVector()->begin(); itor != Paddle.getPVector()->end(); itor++){
 		if (this->getSprite()->getGlobalBounds().intersects(itor->getGlobalBounds())){
+			//if (itor == Paddle.getPVector()->begin() && next(itor) == Paddle.getPVector()->end()){
+			//Paddle.getPVector()->clear();
+			//}
+			if (itor == Paddle.getPVector()->begin()){
+				itor = Paddle.getPVector()->erase(itor);
+				if (this->yVelocity > 0){
+					this->yVelocity = fmin(-550.f, -(yVelocity * 2.0f));
+					this->xVelocity /= 1.75f;
+					//this->xVelocity *= (2.0f);
+					//this->xVelocity = fmax(550.f, (xVelocity * 2.0f));
+					
+				}
+				return true;
+			}
+			if (itor != Paddle.getPVector()->end() && next(itor) == Paddle.getPVector()->end()){
+				itor = Paddle.getPVector()->erase(itor);
+				if (this->yVelocity < 0){
+					this->yVelocity *= (-1.f);
+					//this->xVelocity *= (2.0f);
+					this->xVelocity = fmax(550.f, (xVelocity * 2.0f));
+				}
+				return true;
+			}
+			this->yVelocity = 300.f;
+			//this->yVelocity = fmin(550.f, (yVelocity * 2.0f));
+			this->xVelocity = 300.f;
 			itor = Paddle.getPVector()->erase(itor);
 			return true;
 		}
 	}
 	return false;
 }
-
 void ball::reverseX(){
 	this->xVelocity *= (-1.f);
 }

@@ -1,10 +1,9 @@
-﻿Build started 7/30/2015 9:09:59 PM.
+﻿Build started 8/1/2015 1:01:02 AM.
      1>Project "D:\Users\Andy\Desktop\cpp projects\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (test.vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
-         D:\Program Files (x86)\VC\bin\CL.exe /c /I"D:\Program Files (x86)\SFML\SFML-2.3.1\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D SFML_STATIC /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
-         main.cpp
-     1>main.cpp(70): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         D:\Program Files (x86)\VC\bin\CL.exe /c /I"D:\Program Files (x86)\SFML\SFML-2.3.1\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D SFML_STATIC /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ball.cpp
+         ball.cpp
        Link:
          D:\Program Files (x86)\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\Andy\Desktop\cpp projects\ConsoleApplication1\Release\pong.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"D:\Program Files (x86)\SFML\SFML-2.3.1\lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "sfml-graphics-s.lib" "sfml-window-s.lib" "sfml-system-s.lib" opengl32.lib freetype.lib jpeg.lib winmm.lib gdi32.lib "sfml-main.lib" "sfml-audio-s.lib" openal32.lib flac.lib vorbisenc.lib vorbisfile.lib vorbis.lib ogg.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\Andy\Desktop\cpp projects\ConsoleApplication1\Release\pong.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\Andy\Desktop\cpp projects\ConsoleApplication1\Release\pong.lib" /MACHINE:X86 /SAFESEH Release\main.obj
          Release\ball.obj
@@ -17,4 +16,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.06
+Time Elapsed 00:00:01.04

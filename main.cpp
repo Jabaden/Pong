@@ -6,6 +6,7 @@
 #include "ball.h"
 #include "paddle.h"
 #include "powerup.h"
+#include "time.h"
 
 
 //THIS IS A BIG OL TEST
@@ -15,6 +16,13 @@ int main()
 {
 	const int gameWidth = 1200;
 	const int gameHeight = 600;
+	srand(time(NULL));
+	int rHeight = 0;
+	int rWidth = 0;
+
+	rHeight = rand() % 580 + 20;
+	rWidth = rand() % 1000 + 200;
+
 	sf::Clock clock;
 	sf::Clock leftClock;
 	sf::Clock rightCLock;
@@ -55,13 +63,13 @@ int main()
 	puPtr->setTexture(powerupTexture);
 
 	ballPtr = new sf::Sprite();
-	ballPtr->setScale(0.25f, 0.25f);
-	ballPtr->setTexture(ballTexture);
+	ballPtr->setScale(0.15f, 0.15f);
+	ballPtr->setTexture(ballTexture, true);
 
 	window.setPosition(sf::Vector2i(10, 50));
 	ball testBall(ballPtr);
-	paddle testPaddle(paddleTexture, 3, 1); //left
-	paddle testPaddle2(paddleTexture, 5, 2); 
+	paddle testPaddle(paddleTexture, 4, 1); //left
+	paddle testPaddle2(paddleTexture, 4, 2); 
 
 	sf::Sprite segment;
 	segment.setTexture(*paddleTexture, true);
@@ -125,7 +133,9 @@ int main()
 				segment.setPosition(0, (testPaddle.getPVector()->back().getPosition().y) + lastHeight);
 				testPaddle.getPVector()->push_back(segment);
 			}
-			powerUp.getSprite()->setPosition(200, 200);
+			rHeight = rand() % 580 + 20;
+			rWidth = rand() % 1000 + 200;
+			powerUp.getSprite()->setPosition(rWidth, rHeight);
 			
 		}
 
@@ -133,14 +143,15 @@ int main()
 			if (testBall.checkCollision(testPaddle2) == true){
 				window.setTitle("collided with right");
 				testBall.swapHitBy();
-				applause.play();
+				//applause.play();
 				testBall.reverseX();
 			}
 		}
 		if (testBall.getSprite()->getPosition().x < gameWidth * .2){
 			if (testBall.checkCollision(testPaddle) == true){
 				window.setTitle("collided with left");
-				
+				testBall.swapHitBy();
+				//applause.play();
 				testBall.reverseX();
 			}
 		}

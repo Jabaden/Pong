@@ -31,11 +31,17 @@ void paddle::drawPaddle(sf::RenderWindow* wnd){
 void paddle::movePaddle(sf::Clock* clk, bool direction){
 	float delta = clk->restart().asSeconds();
 	if (direction){
+		if (this->pdl->begin()->getPosition().y < 0){
+			return;
+		}
 		for (auto itor = pdl->begin(); itor != pdl->end(); itor++){
 			itor->move(0, -pSpeed);
 		}
 	}
 	else{
+		if (this->pdl->back().getPosition().y > 540){
+			return;
+		}
 		for (auto itor = pdl->begin(); itor != pdl->end(); itor++){
 			itor->move(0, pSpeed);
 		}
