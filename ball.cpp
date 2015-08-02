@@ -82,7 +82,7 @@ bool ball::checkCollision(paddle Paddle){
 				itor = Paddle.getPVector()->erase(itor);
 				if (this->yVelocity > 0){
 					this->yVelocity = fmin(-550.f, -(yVelocity * 2.0f));
-					this->xVelocity /= 1.75f;
+					this->xVelocity /= 1.1f;
 					//this->xVelocity *= (2.0f);
 					//this->xVelocity = fmax(550.f, (xVelocity * 2.0f));
 					
@@ -129,4 +129,10 @@ void ball::swapHitBy(){
 	else{
 		this->hitByLeft = true;
 	}
+}
+
+void ball::resetBall(){
+	this->sprite->setPosition(1200.f / 2.f, 600.f / 2.f);
+	this->xVelocity = 300.f;
+	this->yVelocity = -300.f;
 }

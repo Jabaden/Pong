@@ -52,3 +52,19 @@ void paddle::movePaddle(sf::Clock* clk, bool direction){
 paddle::sVector* paddle::getPVector(){
 	return pdl;
 }
+
+void paddle::resetPaddle(sf::Sprite sprite, int side){ //0 = left, 1 = right
+	this->getPVector()->clear();
+	int lastHeight;
+	lastHeight = sprite.getGlobalBounds().height;
+
+	for (int i = 0; i < 5; i++){
+		if (side == 0){ //left side
+			sprite.setPosition(0, (this->getPVector()->back().getPosition().y) + lastHeight);
+		}
+		else{
+			sprite.setPosition(1180, (this->getPVector()->back().getPosition().y) + lastHeight);
+		}
+		getPVector()->push_back(sprite);
+	}
+}

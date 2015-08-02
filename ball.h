@@ -24,6 +24,7 @@ class ball{
 		void moveBall(sf::Clock* clk);
 		void reverseX();
 		void swapHitBy();
+		void resetBall();
 		
 		bool checkPowerupCollision(sf::Sprite* pUp);
 		bool checkLeft();
@@ -32,5 +33,6 @@ class ball{
 		bool checkBot();
 		bool checkCollision(paddle pdl);
 		bool getHitBy();
+
 };
 #endif
